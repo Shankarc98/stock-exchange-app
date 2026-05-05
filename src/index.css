@@ -1,0 +1,313 @@
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(204, 206, 242);
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;  
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  background-color: white;
+}
+.main-color{
+  background:rgb(77, 85, 204);
+  color: white;
+}
+.sec-color{
+  background-color: rgb(204, 206, 242);
+
+}
+.main-font-color{
+  color: rgb(77, 85, 204);
+}
+.header{
+  height: 10%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+.stock-logo{
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: 1rem;
+}
+.brand{
+  width: fit-content;
+  margin-left: 4rem;
+
+}
+.wallet{
+  width: fit-content;
+  position: fixed;
+  right: 1rem;
+  position: absolute;
+  
+}
+
+/*Navigation bar*/
+.navigation{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.navi-btn{
+  
+  border-radius: 10px;
+  height: 50px;
+  font-size: 15px;
+}
+
+/*timer*/
+.clock{
+  position: absolute;
+  left: 1.5rem;
+  border-radius: 7px;
+  width: 150px;
+  height: 30px;
+  padding: 0.5rem;
+  padding-right: 5px;
+  padding-left: 15px;
+}
+
+
+/*History*/
+.table{
+  overflow-x: auto;
+}
+.history-cont{
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
+  margin: 0 auto;
+  background-color: rgb(206, 232, 223);
+  
+}
+.hist-row{
+  display: flex;
+  justify-content: start;
+  gap: 2rem;
+  align-items: center;
+}
+.transactionType{
+  width: 65px;
+}
+.transactionName{
+  width: 100px;
+}
+.transactionShares{
+  width: 80px;
+}
+.transactionPrice{
+  width: 100px;
+}
+.transactionMoney{
+  width: 100px;
+}
+.del-transaction{
+  width: 25px;
+}
+
+.portfolio{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  height: 100vh;
+  width: 300px;
+  position: absolute;
+  right: 8px;
+  top: 87px;  
+  background-color: white;
+}
+.portfolio-top{
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  border: solid black 1px;
+}
+.records{
+  display: flex;
+  gap: 4rem;
+}
+.port-comp-name{
+  width: 50%;
+  margin-left: 1rem;
+}
+.port-close{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: red;  
+}
+
+
+/* Company cards container */
+.company-cards-cont{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;  
+  justify-content: space-around;
+  
+}
+
+.card-cont{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 220px;
+  height: 270px;  
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 9%;
+  border: solid 1px rgb(242, 225, 225);
+  align-self: center;
+}
+.logo-comp{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  height: 20%;
+  justify-content: flex-start;
+}
+
+.logo{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+.comp-name{
+  font-size: 1.5rem;
+}
+
+.price{
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.change{
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.card-buttons{
+   width: 100%;
+   height: 20%;
+   display: flex;
+   gap: 2px;
+   justify-content: space-around;   
+   margin-bottom: 1rem;
+}
+.btn{
+  width: 43%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease; 
+  font-weight: bold;
+}
+
+/* Buy container */
+.buy-sell-cont{
+  position: relative;
+}
+.trade-cont{
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  height: 300px;
+  width: 350px;
+  top: 40%;
+  left: 40%;
+  background: rgb(243, 231, 231);
+  border: 1px solid black;
+  font-size: x-large;  
+  border-radius: 20px;
+}
+.head{
+  display: flex;
+  width: 100%;
+  height: 15%;
+  position: relative;
+  align-items: center;
+  margin-bottom: 0px;
+}
+.title{
+  width: 200px;
+  margin-top: 5px;
+  margin-left: 120px;
+  margin-bottom: 10px;
+  font-size: x-large;
+}
+.close{
+  width: 2rem;
+  height: 2rem;
+  background-color: inherit;  
+  margin-left: 80%;  
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+.tradeName{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.totalShares{
+  font-size: smaller;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.yourShares{
+  font-size: smaller;
+  margin-top: 0px;
+  margin-bottom: 0;
+}
+
+.incDec{
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  height: 10%;
+}
+.dec{
+  width: 2rem;
+}
+.count{
+  margin-top: 0px;
+}
+.inc{
+  width: 2rem;
+}
+
+.buyButton{
+  width: 100%;
+  height: 15%;
+}
+
+/* Sell container */
+.trade-cont{
+  z-index: 1;  
+  position: fixed;
+  height: 300px;
+  width: 350px;
+  top: 25%;
+  left: 25%;
+  background: white;
+  border: 1px solid black;
+}
