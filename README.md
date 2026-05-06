@@ -1,17 +1,69 @@
-# React + Vite
+# Stock Exchange Simulation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic stock market simulation web application built using React, allowing users to buy and sell shares, track their portfolio, and view transaction history in a real-time interactive environment.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
+👉 [View App](https://your-app-link.vercel.app)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+- React (Frontend)
+- JavaScript (ES6+)
+- CSS (Responsive UI)
+- React Hooks (useState, useEffect)
+- React Router (for navigation)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# stock-exchange-app
+## Features
+
+- Real-time stock price simulation
+- Buy and sell shares
+- Portfolio tracking
+- Transaction history with delete functionality
+- Dynamic UI updates using React state
+- Responsive design (desktop + mobile)
+
+---
+
+## How It Works
+
+- Stock prices fluctuate dynamically using logic-based simulation
+- Users can execute trades based on available balance
+- Portfolio updates instantly based on transactions
+- Transaction history records all trades with details
+- State is managed using React hooks for efficient rendering
+
+---
+
+## Project Structure
+´´´
+stock-exchange-app/
+├── public/
+│   └── images/
+│       ├── stock.svg
+│       ├── wallet.svg
+│       └── (company logos...)
+├── src/
+│   ├── Components/
+│   │   ├── Buy.jsx
+│   │   ├── Card.jsx
+│   │   ├── History.jsx
+│   │   ├── Home.jsx
+│   │   ├── Portfolio.jsx
+│   │   ├── Sell.jsx
+│   │   ├── Timer.jsx
+│   │   └── Transaction.jsx
+│   ├── assets/
+│   │   └── Data.jsx
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+└── vite.config.js
+´´´
