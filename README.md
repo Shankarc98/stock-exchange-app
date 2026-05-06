@@ -5,9 +5,12 @@ A dynamic stock market simulation web application built using React, allowing us
 ---
 
 ## Live Demo
-👉 [View App](https://your-app-link.vercel.app)
-
+https://stock-exchange-app-zeta.vercel.app/
 ---
+
+## Why This Project?
+
+This project was built to simulate real-world trading interactions and improve my understanding of building dynamic, state-driven applications using React.
 
 ## Tech Stack
 - React (Frontend)
@@ -39,31 +42,60 @@ A dynamic stock market simulation web application built using React, allowing us
 
 ---
 
-## Project Structure
-´´´
+## Project Structure 
+```
 stock-exchange-app/
 ├── public/
-│   └── images/
-│       ├── stock.svg
-│       ├── wallet.svg
-│       └── (company logos...)
+│ └── images/
+│ ├── stock.svg
+│ ├── wallet.svg
+│ └── (company logos...)
 ├── src/
-│   ├── Components/
-│   │   ├── Buy.jsx
-│   │   ├── Card.jsx
-│   │   ├── History.jsx
-│   │   ├── Home.jsx
-│   │   ├── Portfolio.jsx
-│   │   ├── Sell.jsx
-│   │   ├── Timer.jsx
-│   │   └── Transaction.jsx
-│   ├── assets/
-│   │   └── Data.jsx
-│   ├── App.css
-│   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
+│ ├── Components/
+│ │ ├── Buy.jsx
+│ │ ├── Card.jsx
+│ │ ├── History.jsx
+│ │ ├── Home.jsx
+│ │ ├── Portfolio.jsx
+│ │ ├── Sell.jsx
+│ │ ├── Timer.jsx
+│ │ └── Transaction.jsx
+│ ├── assets/
+│ │ └── Data.jsx
+│ ├── App.css
+│ ├── App.jsx
+│ ├── index.css
+│ └── main.jsx
 ├── index.html
 ├── package.json
 └── vite.config.js
-´´´
+```
+---
+## Installation & Setup
+
+1. Clone the repository:
+git clone https://github.com/Shankarc98/stock-exchange-app
+
+2. cd stock-exchange-app
+
+3. npm install
+
+4. npm start
+
+Author: Shankar Narayan 
+
+## Screenshots 
+<img width="1901" height="871" alt="image" src="https://github.com/user-attachments/assets/c85ca240-6f7d-4579-ab15-7328e8a92e8d" />
+
+## Key Learnings
+
+- Improved understanding of React state management using hooks
+- Learned how to structure components for scalability
+- Implemented dynamic UI updates based on user actions
+- Gained experience handling user interactions and edge cases
+
+## Challenges Faced
+
+- Managing state consistency across multiple components
+- Handling dynamic updates for stock prices without performance issues
+- Ensuring responsive design for smaller screens
