@@ -161,14 +161,21 @@ function Home(props){
   //App component
   return <div className="container">
       <div className="header main-color">
-        <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>
-        <h1 className="brand">Stock Market Simulation</h1> 
+        <div className="logo-brand">
+          <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>
+          <h1 className="brand">Stock Market Simulation</h1>           
+        </div>
+        
         <h2 className="wallet">Your Wallet = {Number(wallet.wal.toFixed(2))}</h2>
+
       </div>
       <div className="navigation" >
         <Timer /> 
-        <button onClick={() => navigate("/history")} className="history-button navi-btn sec-color">Transaction History</button>
-        <button onClick={() => setPortfolio(true)} className='navi-btn sec-color'>Portfolio</button>
+        <div className="portfolio-history">
+          <button onClick={() => navigate("/history")} className="history-button navi-btn sec-color">Transaction History</button>
+          <button onClick={() => setPortfolio(true)} className='navi-btn sec-color'>Portfolio</button>
+        </div>
+        
       </div>
       <div className="company-cards-cont">
           {shares.map(s => {

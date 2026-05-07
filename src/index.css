@@ -25,40 +25,43 @@ body{
 }
 .header{
   height: 10%;
-  display: flex;
-  justify-content: flex-start;
+  display: flex;  
+  justify-content: space-between;
   align-items: center;
-  position: relative;
+  
 }
+.logo-brand{
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
 .stock-logo{
   height: 30px;
   width: 30px;
-  position: absolute;
   left: 1rem;
 }
+
 .brand{
   width: fit-content;
-  margin-left: 4rem;
+  margin-left: 1rem;
 
 }
 .wallet{
   width: fit-content;
-  position: fixed;
-  right: 1rem;
-  position: absolute;
+  margin-right: 1rem;
   
 }
 
 /*Navigation bar*/
 .navigation{
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  position: relative;
+
 }
-.navi-btn{
-  
+.navi-btn{  
   border-radius: 10px;
   height: 50px;
   font-size: 15px;
@@ -66,7 +69,6 @@ body{
 
 /*timer*/
 .clock{
-  position: absolute;
   left: 1.5rem;
   border-radius: 7px;
   width: 150px;
@@ -75,23 +77,41 @@ body{
   padding-right: 5px;
   padding-left: 15px;
 }
-
+/*Navigation buttons*/
+.portfolio-history{
+  display: flex;
+  gap: 1rem;
+}
 
 /*History*/
 .table{
   overflow-x: auto;
 }
+.history-top-row{
+  font-weight: bold;
+}
+
 .history-cont{
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   padding: 0 16px;
   margin: 0 auto;
-  background-color: rgb(206, 232, 223);
-  
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+}
+.history-header{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.table-cont{
+  width: 90%;
 }
 .hist-row{
   display: flex;
-  justify-content: start;
+  justify-content: space-evenly;
   gap: 2rem;
   align-items: center;
 }
@@ -217,21 +237,21 @@ body{
 }
 
 /* Buy container */
-.buy-sell-cont{
-  position: relative;
-}
+
 .trade-cont{
+  position: fixed; /* better than absolute */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
+
   height: 300px;
-  width: 350px;
-  top: 40%;
-  left: 40%;
-  background: rgb(243, 231, 231);
+  width: 350px;  
   border: 1px solid black;
   font-size: x-large;  
   border-radius: 20px;
@@ -243,6 +263,7 @@ body{
   position: relative;
   align-items: center;
   margin-bottom: 0px;
+  border-radius: 10px;
 }
 .title{
   width: 200px;
@@ -295,19 +316,40 @@ body{
   width: 2rem;
 }
 
-.buyButton{
-  width: 100%;
-  height: 15%;
+.trade-btn{
+  width: 90%;
+  height: 12%;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  
 }
 
-/* Sell container */
-.trade-cont{
-  z-index: 1;  
-  position: fixed;
-  height: 300px;
-  width: 350px;
-  top: 25%;
-  left: 25%;
-  background: white;
-  border: 1px solid black;
+
+
+@media (max-width: 768px){
+  .header{
+    height: 20%; 
+    display: flex;
+    flex-direction: column;    
+  }
+  .brand {
+    font-size: 1rem;
+  }
+
+  .wallet {
+    font-size: 0.9rem;
+  }
+
+  .navigation{
+    flex-direction: column;
+  }
+  
+  .transactionMoney{
+    display: none;
+  }
+  .transactionPrice{
+    display: none;
+  }
+  
 }

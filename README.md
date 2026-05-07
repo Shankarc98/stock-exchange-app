@@ -5,8 +5,10 @@ A dynamic stock market simulation web application built using React, allowing us
 ---
 
 ## Live Demo
-👉 [View App](https://your-app-link.vercel.app)
+https://stock-exchange-app-zeta.vercel.app/
 
+## Repository Link 
+https://github.com/Shankarc98/stock-exchange-app
 ---
 
 ## Tech Stack
@@ -40,8 +42,8 @@ A dynamic stock market simulation web application built using React, allowing us
 ---
 
 ## Project Structure
-´´´
-stock-exchange-app/
+```
+stock-simulation/
 ├── public/
 │   └── images/
 │       ├── stock.svg
@@ -66,4 +68,23 @@ stock-exchange-app/
 ├── index.html
 ├── package.json
 └── vite.config.js
-´´´
+```
+
+## Key Learnings
+
+- Improved understanding of React state management using hooks
+- Learned component-based architecture and reusability
+- Handled dynamic UI updates based on user interactions
+- Gained experience building a real-world interactive application
+
+## Challenges Faced
+
+- Managing state across multiple components
+- Handling real-time stock price updates efficiently
+- Ensuring smooth UI updates without performance issues
+- Making the layout responsive for smaller screens
+
+## screenshots
+![alt text](image.png)
+
+Author: Shankar Narayan 

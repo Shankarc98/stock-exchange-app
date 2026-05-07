@@ -3,6 +3,10 @@ import Transaction from "./Transaction";
 
 function History(props){
     return <div className="history-cont">
+        <div className="history-header main-color">
+            <h1>Transaction History</h1>
+        </div>
+        
         <div className="table-cont">
         <div className="history-top-row hist-row">
             <p className="transactionType">Trade</p>
