@@ -22,13 +22,7 @@ function App(){
     setTransactionId(prev => prev + 1);
     console.log(history);
     
-  }
-  function deleteTransaction(id){
-    setHistory(prev => {
-      return prev.filter(p => p.id !== id)
-    })
-  }
-  
+  }  
 
   return <Routes>
     <Route path="/" element = {<Login />}/>

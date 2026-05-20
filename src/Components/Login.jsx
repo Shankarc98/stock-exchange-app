@@ -19,7 +19,7 @@ function Login(){
 
         try{
 
-            const response = await fetch(`https://stock-backend-k87i.onrender.com/${username}/name`);
+            const response = await fetch(`https://stock-backend-server.onrender.com/${username}/name`);
             const player = await response.json(); 
 
             if(response.ok) navigate("/home", {
