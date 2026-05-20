@@ -1,10 +1,8 @@
 import {React, useEffect, useState} from "react";
-import companies from "../assets/Data";
 
 function Buy(props){                    
 
     const [count, setCount] = useState(0);
-    
     function handleChange(event){
         
         let val = Number(event.target.value)
@@ -24,9 +22,9 @@ function Buy(props){
             <button onClick={props.close} className="close">✖</button>
         </div>
         
-        <p className="tradeName">{props.sharesHeld[props.compId].companyName}</p>
-        <p className="totalShares">Total Shares in the company: {props.sharesHeld[props.compId].totalShares}</p>
-        <p className="yourShares">Your shares in the company: {props.sharesHeld[props.compId].yourShares}</p>
+        <p className="tradeName">{props.selectedCompany.name}</p>
+        <p className="totalShares">Total Shares in the company: {props.selectedCompany.stocks}</p>
+        <p className="yourShares">Your shares in the company: {props.stocksHeld?.numOfStocks}</p>
             
         <input type="number" onChange={(event) => handleChange(event)} className="numShares" size="3" value={count}></input>
             
@@ -39,9 +37,9 @@ function Buy(props){
             <button onClick={props.close} className="close">x</button>
         </div>
         
-        <p className="tradeName">{props.sharesHeld[props.compId].companyName}</p>
-        <p className="totalShares">Total Shares in the company: {props.sharesHeld[props.compId].totalShares}</p>
-        <p className="yourShares">Your shares in the company: {props.sharesHeld[props.compId].yourShares}</p>
+        <p className="tradeName">{props.selectedCompany.name}</p>
+        <p className="totalShares">Total Shares in the company: {props.selectedCompany.stocks}</p>
+        <p className="yourShares">Your shares in the company: {props.stocksHeld?.numOfStocks}</p>
             
         <input type="number" onChange={(event) => handleChange(event)} className="numShares" size="3" value={count}></input>
             

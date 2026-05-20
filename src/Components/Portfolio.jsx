@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from "react"; 
+import React, {useState} from "react"; 
+
 
 function Portfolio(props){
+    
+    const [records, setRecords] = useState(props.sharesHeld); 
 
-    const [portfolio, setPortfolio] = useState(() => {
-        const savedPortfolio = localStorage.getItem("portfolio"); 
-    
-        if(savedPortfolio) return JSON.parse(savedPortfolio); 
-        else return props.sharesHeld;
-    })
-    
-    useEffect(() => {
-        localStorage.setItem("portfolio", JSON.stringify(portfolio));     
-    }, [portfolio])
     
     return <div style = {{display: props.style}} className="portfolio">
         
         <div className="portfolio-top">
             <p className="portfolio-comp-name">Company</p> 
             <p className="portfolio-shares">Shares</p>
-            <button onClick={props.closePort} className="port-close">x</button>
-
-           
+            <button onClick={props.closePort} className="port-close">x</button>           
         </div>
 
         {props.sharesHeld.map(s => {
-                return (<div key={s.companyId}className="records">
+                return (<div key={crypto.randomUUID()} className="records">
                     <p className="port-comp-name">{s.companyName}</p>
-                    <p>{s.yourShares}</p>
+                    <p>{s.numOfStocks}</p>
                 </div>);
             })}
 

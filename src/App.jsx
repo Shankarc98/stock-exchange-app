@@ -1,34 +1,13 @@
 import { React, useState, useEffect } from 'react'
 import Home from "./Components/Home";
 import History from "./Components/History.jsx";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
 import {Routes, Route} from "react-router-dom";
 
 function App(){
-
-  //id
-  const [transactionId, setTransactionId] = useState(() => {
-    const savedTranId = localStorage.getItem("transactionId");
-
-    if(savedTranId) return Number(savedTranId);
-    else return 0;
-  })
-
-  useEffect(() => {
-      localStorage.setItem("transactionId", transactionId)
-  }, [transactionId])
-
-  //History array
-  const [history, setHistory] = useState(() => {
-    const savedHistory = localStorage.getItem("history"); 
-
-    if(savedHistory) return JSON.parse(savedHistory);
-    else return [];
-  })
-
-  useEffect(() => {
-    localStorage.setItem("history", JSON.stringify(history))
-  }, [history]);
-
+  
+    
   function updateHistory(tr, nm, sh, pr){
     
     let tran = sh * pr;
@@ -52,8 +31,10 @@ function App(){
   
 
   return <Routes>
-    <Route path="/" element={<Home updateHistory={updateHistory}/>} />
-    <Route path="/history" element={<History history={history} deleteTransaction={deleteTransaction}/>}/>
+    <Route path="/" element = {<Login />}/>
+    <Route path="/signup" element = {<Signup />}/>
+    <Route path="/home" element={<Home updateHistory={updateHistory}/>} />
+    <Route path="/history" element={<History />}/>
   </Routes>  
 }
 
