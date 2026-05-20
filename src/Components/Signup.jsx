@@ -22,18 +22,29 @@ function Signup(){
             return
         }
 
-        const check = await fetch("https://stock-backend-server.onrender.com/player", {
-            method: "GET"
-        })
-        const players = await check.json();
-        
-        players.map(p => {
-            if(p.name === usernameInp) {                
-                alert("username already exists");   
-                exists = true;                             
+        try{
+            const check = await fetch("https://stock-backend-server.onrender.com/player", {
+                method: "GET"
+            })
+    
+            if(!check.ok){
+                throw new Error("request failed");
             }
             
-        })  
+            const players = await check.json();
+        
+            players.map(p => {
+                if(p.name === usernameInp) {                
+                    alert("username already exists");   
+                    exists = true;                             
+                }
+            })
+        }
+        catch(error){
+            console.log(error);
+        }
+               
+                
         if(!exists){
             const response = await fetch("https://stock-backend-server.onrender.com/player", {
                 method: "POST",
@@ -63,6 +74,7 @@ function Signup(){
         }                              
             
     }
+
     function handleUsername(event){
         setUnameInp(event.target.value);
     }
