@@ -5,24 +5,7 @@ import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import {Routes, Route} from "react-router-dom";
 
-function App(){
-  
-    
-  function updateHistory(tr, nm, sh, pr){
-    
-    let tran = sh * pr;
-    tran = Number(tran.toFixed(2));
-    
-    console.log(pr);
-    console.log(tran);
-    setHistory(prev => {
-      return [...prev, {id: transactionId, type: tr, compName: nm, sharesTraded: sh, atPrice: pr, money: tran} ]
-    })
-
-    setTransactionId(prev => prev + 1);
-    console.log(history);
-    
-  }  
+function App(){        
 
   return <Routes>
     <Route path="/" element = {<Login />}/>

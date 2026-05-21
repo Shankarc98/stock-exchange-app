@@ -9,7 +9,7 @@ function History(props){
 
     useEffect(() => {
         const fetchPlayer = async () => {
-            let response = await fetch(`https://stock-backend-server.onrender.com/${state.player.name}/name`)
+            let response = await fetch(`https://stock-backend-k87i.onrender.com/${state.player.name}/name`)
 
             let data = await response.json(); 
 
@@ -18,7 +18,7 @@ function History(props){
         fetchPlayer(); 
     }, [])
     async function deleteHistory(id){
-        let response = await fetch(`https://stock-backend-server.onrender.com/${state.player.id}/deleteTransaction/${id}`, {
+        let response = await fetch(`https://stock-backend-k87i.onrender.com/${state.player.id}/deleteTransaction/${id}`, {
             method: "PATCH",                       
         });
 

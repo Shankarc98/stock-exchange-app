@@ -14,7 +14,7 @@ function Home(props){
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await fetch(`https://stock-backend-server.onrender.com/${player.name}/name`)
+      const response = await fetch(`https://stock-backend-k87i.onrender.com/${player.name}/name`)
       
       const playerResponse = await response.json();
       setPlayer(playerResponse);
@@ -28,7 +28,7 @@ function Home(props){
 
   useEffect(() => {
    const fetchCompanies = async () => {
-    const response = await fetch("https://stock-backend-server.onrender.com/company", {
+    const response = await fetch("https://stock-backend-k87i.onrender.com/company", {
       method: "GET"
     })
     const data = await response.json();
@@ -38,7 +38,7 @@ function Home(props){
   }, []);
 
   async function fetchPrices(){
-    const response = await fetch("https://stock-backend-server.onrender.com/company", {
+    const response = await fetch("https://stock-backend-k87i.onrender.com/company", {
         method: "GET",            
     })
     const data = await response.json();
@@ -111,7 +111,7 @@ function Home(props){
       }
 
       async function handleBuy(id, stocks){
-        const response =  await fetch(`https://stock-backend-server.onrender.com/${player.id}/buy`, {
+        const response =  await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/buy`, {
           method: "PUT",
 
           headers: {
@@ -140,7 +140,7 @@ function Home(props){
             p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
           ));
 
-          let savedPlayer = await fetch(`https://stock-backend-server.onrender.com/${player.id}/transaction`, {
+          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/transaction`, {
             method: "PATCH", 
 
             headers: {
@@ -168,7 +168,7 @@ function Home(props){
 
     async function handleSell(id, stocks){
         
-       const response =  await fetch(`https://stock-backend-server.onrender.com/${player.id}/sell`, {
+       const response =  await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/sell`, {
           method: "PUT",
 
           headers: {
@@ -199,7 +199,7 @@ function Home(props){
           
         );
 
-          let savedPlayer = await fetch(`https://stock-backend-server.onrender.com/${player.id}/transaction`, {
+          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/transaction`, {
             method: "PATCH", 
 
             headers: {

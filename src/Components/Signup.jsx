@@ -23,7 +23,7 @@ function Signup(){
         }
 
         try{
-            const check = await fetch("https://stock-backend-server.onrender.com/player", {
+            const check = await fetch("https://stock-backend-k87i.onrender.com/player", {
                 method: "GET"
             })
     
@@ -46,7 +46,7 @@ function Signup(){
                
                 
         if(!exists){
-            const response = await fetch("https://stock-backend-server.onrender.com/player", {
+            const response = await fetch("https://stock-backend-k87i.onrender.com/player", {
                 method: "POST",
 
                 headers: {
