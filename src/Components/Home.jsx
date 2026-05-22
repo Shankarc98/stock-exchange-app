@@ -140,7 +140,7 @@ function Home(props){
             p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
           ));
 
-          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/transaction`, {
+          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/addTransaction`, {
             method: "PATCH", 
 
             headers: {
@@ -199,7 +199,7 @@ function Home(props){
           
         );
 
-          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/transaction`, {
+          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/addTransaction`, {
             method: "PATCH", 
 
             headers: {
