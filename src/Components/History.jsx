@@ -9,7 +9,7 @@ function History(props){
 
     useEffect(() => {
         const fetchPlayer = async () => {
-            let response = await fetch(`https://stock-backend-k87i.onrender.com/${state.player.name}/name`)
+            let response = await fetch(`https://stock-backend-k87i.onrender.com/player/${state.player.name}/name`)
 
             let data = await response.json(); 
 

@@ -14,7 +14,7 @@ function Home(props){
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await fetch(`https://stock-backend-k87i.onrender.com/player${player.name}/name`)
+      const response = await fetch(`https://stock-backend-k87i.onrender.com/player/${player.name}/name`)
       
       const playerResponse = await response.json();
       setPlayer(playerResponse);
@@ -111,7 +111,7 @@ function Home(props){
       }
 
       async function handleBuy(id, stocks){
-        const response =  await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/buy`, {
+        const response =  await fetch(`https://stock-backend-k87i.onrender.com/trade/${player.id}/buy`, {
           method: "PUT",
 
           headers: {
@@ -168,7 +168,7 @@ function Home(props){
 
     async function handleSell(id, stocks){
         
-       const response =  await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/sell`, {
+       const response =  await fetch(`https://stock-backend-k87i.onrender.com/trade/${player.id}/sell`, {
           method: "PUT",
 
           headers: {
