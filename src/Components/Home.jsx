@@ -14,7 +14,7 @@ function Home(props){
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await fetch(`https://stock-backend-k87i.onrender.com/${player.name}/name`)
+      const response = await fetch(`https://stock-backend-k87i.onrender.com/player${player.name}/name`)
       
       const playerResponse = await response.json();
       setPlayer(playerResponse);
