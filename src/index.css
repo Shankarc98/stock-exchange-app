@@ -346,7 +346,7 @@ body{
 .login-cont{
   height: 400px;
   width: 300px; 
-  background-color: rgb(229, 251, 251);
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;

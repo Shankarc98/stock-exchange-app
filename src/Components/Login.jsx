@@ -22,14 +22,15 @@ function Login(){
             const response = await fetch(`https://stock-backend-k87i.onrender.com/player/${username}/name`);
             const player = await response.json(); 
 
-            if(response.ok){ 
+            if(response.ok && player.password == password){ 
+                
                 console.log("logged in");
                 navigate("/home", {
                     state: {
                         player
                     }
                 })
-        }
+            }
             else {
                 console.log(response);
                 alert("invalid username or password");
