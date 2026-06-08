@@ -227,7 +227,6 @@ function Home(props){
     })
   }
 
-  console.log("seconds from home " + seconds);
   //App component
   return <div className="container">
       <div className="header main-color">

@@ -26,7 +26,6 @@ function Login(){
 
             if(response.ok && player.password == password){ 
                 
-                console.log("logged in");
                 navigate("/home", {
                     state: {
                         player

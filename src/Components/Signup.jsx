@@ -12,7 +12,6 @@ function Signup(){
 
         event.preventDefault(); 
         let exists = false;
-        console.log("signed up"); 
         if(usernameInp.length < 5){
             alert("username should have atleast 5 characters"); 
             return
@@ -60,7 +59,6 @@ function Signup(){
             })
             const player = await response.json(); 
 
-            console.log(player); 
 
             if(!response.ok){
                 throw new Error("failed to create player");
