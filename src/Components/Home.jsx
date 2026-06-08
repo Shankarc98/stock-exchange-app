@@ -7,61 +7,60 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 function Home(props){
   
+  
   const navigate = useNavigate(); 
   const {state} = useLocation(); 
 
   const [player, setPlayer] = useState(state.player);
+  const [seconds, setSeconds] = useState(0); 
+
+  const url = import.meta.env.VITE_API_URL; 
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await fetch(`https://stock-backend-k87i.onrender.com/player/${player.name}/name`)
+      const response = await fetch(`${url}/player/${player.name}/name`)
       
       const playerResponse = await response.json();
       setPlayer(playerResponse);
     }
-    
+          
     fetchPlayer();
 
   }, []);
+
   //main array - all companies
   const [companies, updateCompanies] = useState([]); 
 
   useEffect(() => {
    const fetchCompanies = async () => {
-    const response = await fetch("https://stock-backend-k87i.onrender.com/company", {
+    const response = await fetch(`${url}/company`, {
       method: "GET"
     })
     const data = await response.json();
-    updateCompanies(data);
+    updateCompanies(data.companies);
+    setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
    }
     fetchCompanies();
   }, []);
+  
 
   async function fetchPrices(){
-    const response = await fetch("https://stock-backend-k87i.onrender.com/company", {
+    const response = await fetch(`${url}/company`, {
         method: "GET",            
     })
     const data = await response.json();
-    return updateCompanies(data);
-}
-
-
-  //timer 
-  const [seconds, setSeconds] = useState(() =>{
-    const savedSeconds = localStorage.getItem("seconds"); 
-
-    if(savedSeconds) return Number(JSON.parse(savedSeconds));
-
-    else return 600;
-  }); 
-  
+    updateCompanies(data.companies);
+    return setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+    
+  }
+       
 
   useEffect(() => {        
           const  fetchCompanies = setInterval(() => {
               setSeconds(prev => {
                   if(prev <= 0){                                           
-                    fetchPrices();  
-                    return 600;                      
+                    fetchPrices(); 
+                                                              
                   }
                   return prev - 1;
               });
@@ -69,10 +68,7 @@ function Home(props){
           
           return () => clearInterval(fetchCompanies);
       }, [])
-
-    useEffect(() => {
-        localStorage.setItem("seconds", JSON.stringify(seconds));
-      }, [seconds]);
+    
 
   let [buyState, setBuyState] = useState(false);
   let [sellState, setSellState] = useState(false);
@@ -111,7 +107,7 @@ function Home(props){
       }
 
       async function handleBuy(id, stocks){
-        const response =  await fetch(`https://stock-backend-k87i.onrender.com/trade/${player.id}/buy`, {
+        const response =  await fetch(`${url}/trade/${player.id}/buy`, {
           method: "PUT",
 
           headers: {
@@ -140,7 +136,7 @@ function Home(props){
             p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
           ));
 
-          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/addTransaction`, {
+          let savedPlayer = await fetch(`${url}/${player.id}/addTransaction`, {
             method: "PATCH", 
 
             headers: {
@@ -168,7 +164,7 @@ function Home(props){
 
     async function handleSell(id, stocks){
         
-       const response =  await fetch(`https://stock-backend-k87i.onrender.com/trade/${player.id}/sell`, {
+       const response =  await fetch(`${url}/trade/${player.id}/sell`, {
           method: "PUT",
 
           headers: {
@@ -199,7 +195,7 @@ function Home(props){
           
         );
 
-          let savedPlayer = await fetch(`https://stock-backend-k87i.onrender.com/${player.id}/addTransaction`, {
+          let savedPlayer = await fetch(`${url}/${player.id}/addTransaction`, {
             method: "PATCH", 
 
             headers: {
@@ -230,6 +226,8 @@ function Home(props){
       state: {player}
     })
   }
+
+  console.log("seconds from home " + seconds);
   //App component
   return <div className="container">
       <div className="header main-color">

@@ -7,6 +7,8 @@ function Login(){
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
 
+    const url = import.meta.env.VITE_API_URL;
+
     function handleUsername(event){
         setUsername(event.target.value); 
     }
@@ -19,7 +21,7 @@ function Login(){
 
         try{
 
-            const response = await fetch(`https://stock-backend-k87i.onrender.com/player/${username}/name`);
+            const response = await fetch(`${url}/player/${username}/name`);
             const player = await response.json(); 
 
             if(response.ok && player.password == password){ 
@@ -41,6 +43,7 @@ function Login(){
         }
         
     }
+
     return <div className = "login-page credential-page">
             
             <div className="brand-header">
@@ -59,8 +62,7 @@ function Login(){
                 <div className="password-container credential-container">
                     <p className="credential-title">Password</p>
                     <input className="password-input credential-input" onChange={handlePassword} value={password} type="password" size="15"/>
-                </div>
-                
+                </div>                
 
                 <div className="access-buttons">
                     <button className="signup-button further-button" onClick={() => {navigate("/signup")}}>Sign Up</button>
