@@ -7,6 +7,7 @@ function Signup(){
     let [usernameInp, setUnameInp] = useState(""); 
     let [pwdInp, setPwdInp] = useState("");
     let [confirmPwd, setConfirmPwd] = useState(""); 
+    const url = import.meta.env.VITE_API_URL;
 
     async function handleSignup(event){
 
@@ -22,7 +23,7 @@ function Signup(){
         }
 
         try{
-            const check = await fetch("https://stock-backend-k87i.onrender.com/player", {
+            const check = await fetch(`${url}/player/${usernameInp}`, {
                 method: "GET"
             })
     
@@ -45,7 +46,7 @@ function Signup(){
                
                 
         if(!exists){
-            const response = await fetch("https://stock-backend-k87i.onrender.com/player", {
+            const response = await fetch(`${url}/player`, {
                 method: "POST",
 
                 headers: {

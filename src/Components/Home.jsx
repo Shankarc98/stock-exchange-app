@@ -156,7 +156,6 @@ function Home(props){
 
           if(savedPlayer.ok){
             setPlayer(savedPlayer);
-            console.log(savedPlayer);
           }
         }
           
@@ -215,7 +214,6 @@ function Home(props){
 
           if(savedPlayer.ok){
             setPlayer(savedPlayer);
-            console.log(savedPlayer);
           }
         }
         
