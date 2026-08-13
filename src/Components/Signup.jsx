@@ -1,5 +1,6 @@
 import {React, useState} from "react"; 
 import {useNavigate} from "react-router-dom"; 
+import apiFetch from "../utils/helper";
 
 function Signup(){
 
@@ -7,7 +8,6 @@ function Signup(){
     let [usernameInp, setUnameInp] = useState(""); 
     let [pwdInp, setPwdInp] = useState("");
     let [confirmPwd, setConfirmPwd] = useState(""); 
-    const url = import.meta.env.VITE_API_URL;
 
     async function handleSignup(event){
 
@@ -23,11 +23,9 @@ function Signup(){
         }
 
         try{
-            const check = await fetch(`${url}/auth/signup`, {
+            const check = await apiFetch(`/auth/signup`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                
                 body: JSON.stringify({
                     name: usernameInp,
                     password: pwdInp
@@ -84,13 +82,13 @@ function Signup(){
                     </div>
     
                     <div className="access-buttons">
-                        <button className="signup-button further-button" >Sign Up</button>
+                        <button className="signup-button further-button" type="submit">Sign Up</button>
                     </div>
                     
                 </form>
             </div>
 
-            <button className="back-to-login further-button" onClick={() => navigate("/")}>Back to Login</button>
+            <button className="back-to-login further-button" onClick={() => navigate("/")} type="button">Back to Login</button>
         </div>        
 }
 
