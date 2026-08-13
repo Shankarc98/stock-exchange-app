@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import Transaction from "./Transaction";
 import { useLocation } from "react-router-dom";
+import apiFetch from "../utils/helper";
 
 function History(props){
     
@@ -9,7 +10,7 @@ function History(props){
 
     useEffect(() => {
         const fetchPlayer = async () => {
-            let response = await fetch(`https://stock-backend-k87i.onrender.com/player/${state.player.name}/name`)
+            let response = await apiFetch(`/player/${state.player.name}/name`)
 
             let data = await response.json(); 
 
@@ -18,7 +19,7 @@ function History(props){
         fetchPlayer(); 
     }, [])
     async function deleteHistory(id){
-        let response = await fetch(`https://stock-backend-k87i.onrender.com/${state.player.id}/deleteTransaction/${id}`, {
+        let response = await apiFetch(`/${state.player.id}/deleteTransaction/${id}`, {
             method: "PATCH",                       
         });
 

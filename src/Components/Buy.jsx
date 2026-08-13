@@ -28,13 +28,13 @@ function Buy(props){
             
         <input type="number" onChange={(event) => handleChange(event)} className="numShares" size="3" value={count}></input>
             
-        <button onClick={() => {props.handle(1, props.compId, count); setCount(0)}} className="trade-btn main-color">Buy</button>
+        <button onClick={() => {props.handle(1, props.compId, count); setCount(0)}} className="trade-btn main-color" type="submit">Buy</button>
     </div>
 
     <div className="sell-cont trade-cont sec-color" style={{display : props.trade == 2 ? "flex" : "none"}}>
         <div className="head">
             <p className="title">Sell Shares</p>
-            <button onClick={props.close} className="close">x</button>
+            <button onClick={props.close} className="close" type="button">x</button>
         </div>
         
         <p className="tradeName">{props.selectedCompany.name}</p>
@@ -43,7 +43,7 @@ function Buy(props){
             
         <input type="number" onChange={(event) => handleChange(event)} className="numShares" size="3" value={count}></input>
             
-        <button onClick={() => {props.handle(2, props.compId, count); setCount(0)}} className="trade-btn main-color">Sell</button>
+        <button onClick={() => {props.handle(2, props.compId, count); setCount(0)}} className="trade-btn main-color" type="submit">Sell</button>
     </div>
 
     </div>

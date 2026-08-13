@@ -21,10 +21,28 @@ function Login(){
 
         try{
 
-            const response = await fetch(`${url}/player/${username}/name`);
-            const player = await response.json(); 
+            const response = await fetch(`${url}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body : JSON.stringify({
+                    name: username,
+                    password: password
+                })
+            });
 
-            if(response.ok && player.password == password){ 
+            const body = await response.json();
+            const player = await body.player;
+            const token = await body.token;
+            
+            localStorage.setItem("token", token); 
+
+            if(!response.ok){
+                alert("Invalid username or password");
+                return;
+            }            
+            else{ 
                 
                 navigate("/home", {
                     state: {
@@ -32,10 +50,7 @@ function Login(){
                     }
                 })
             }
-            else {
-                console.log(response);
-                alert("invalid username or password");
-            }
+            
         }
         catch(error){
             console.log(error); 

@@ -12,7 +12,7 @@ function Signup(){
     async function handleSignup(event){
 
         event.preventDefault(); 
-        let exists = false;
+
         if(usernameInp.length < 5){
             alert("username should have atleast 5 characters"); 
             return
@@ -23,55 +23,28 @@ function Signup(){
         }
 
         try{
-            const check = await fetch(`${url}/player/${usernameInp}`, {
-                method: "GET"
+            const check = await fetch(`${url}/auth/signup`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: usernameInp,
+                    password: pwdInp
+                })  
             })
     
             if(!check.ok){
                 throw new Error("request failed");
             }
-            
-            const players = await check.json();
-        
-            players.map(p => {
-                if(p.name === usernameInp) {                
-                    alert("username already exists");   
-                    exists = true;                             
-                }
-            })
+            else 
+                navigate("/");
+                                
         }
         catch(error){
             console.log(error);
         }
-               
-                
-        if(!exists){
-            const response = await fetch(`${url}/player`, {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    name: usernameInp,
-                    password: pwdInp,
-                })
-            })
-            const player = await response.json(); 
-
-
-            if(!response.ok){
-                throw new Error("failed to create player");
-            }
-
-            navigate("/home", {
-                state: {
-                    player
-                }
-            })
-        }                              
-            
+                                                                          
     }
 
     function handleUsername(event){

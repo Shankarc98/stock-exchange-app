@@ -4,6 +4,7 @@ import companies from '../assets/Data.jsx';
 import Buy from './Buy';
 import Portfolio from "./Portfolio"
 import { useNavigate, useLocation } from 'react-router-dom';
+import apiFetch from '../utils/helper.jsx';
 
 function Home(props){
   
@@ -14,11 +15,12 @@ function Home(props){
   const [player, setPlayer] = useState(state.player);
   const [seconds, setSeconds] = useState(0); 
 
-  const url = import.meta.env.VITE_API_URL; 
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await fetch(`${url}/player/${player.name}/name`)
+      const response = await apiFetch(`/player/${player.name}/name`,{
+        method: "GET",        
+      })
       
       const playerResponse = await response.json();
       setPlayer(playerResponse);
@@ -33,7 +35,7 @@ function Home(props){
 
   useEffect(() => {
    const fetchCompanies = async () => {
-    const response = await fetch(`${url}/company`, {
+    const response = await apiFetch(`/company`, {
       method: "GET"
     })
     const data = await response.json();
@@ -45,7 +47,7 @@ function Home(props){
   
 
   async function fetchPrices(){
-    const response = await fetch(`${url}/company`, {
+    const response = await apiFetch(`/company`, {
         method: "GET",            
     })
     const data = await response.json();
@@ -87,9 +89,10 @@ function Home(props){
 
   
   //buy and sell button in card clicked
-  function handleClick(a, name, cp){
+  async function handleClick(a, name, cp){
     
-    a == 1 ? setBuyState(true) : setSellState(true)
+    a == 1 ? setBuyState(true) : setSellState(true)    
+    
     companies.map((c) => {
       if(c.name === name){ 
         setCompany(c);
@@ -107,13 +110,8 @@ function Home(props){
       }
 
       async function handleBuy(id, stocks){
-        const response =  await fetch(`${url}/trade/${player.id}/buy`, {
+        const response =  await apiFetch(`/trade/${player.id}/buy`, {
           method: "PUT",
-
-          headers: {
-            "Content-Type": "application/json",
-
-          },
 
           body: JSON.stringify({
             numOfStocks: stocks,
@@ -124,11 +122,13 @@ function Home(props){
 
         });
 
-        const updatedPlayer = await response.json();
         
         if(response.ok){
+          
+          const updatedPlayer = await response.json();
+
           setPlayer(prev => {
-           return {...prev, money: updatedPlayer.p.money, stocksHeld: updatedPlayer.p.stocksHeld}
+            return {...prev, money: updatedPlayer.p.money, stocksHeld: updatedPlayer.p.stocksHeld}
           }); 
           setCompany(updatedPlayer.c);
           updateCompanies(prev => 
@@ -136,12 +136,8 @@ function Home(props){
             p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
           ));
 
-          let savedPlayer = await fetch(`${url}/${player.id}/addTransaction`, {
+          let savedPlayer = await apiFetch(`/${player.id}/addTransaction`, {
             method: "PATCH", 
-
-            headers: {
-              "Content-Type": "application/json"
-            },
 
             body: JSON.stringify({
                 trade: "BOUGHT",
@@ -163,13 +159,8 @@ function Home(props){
 
     async function handleSell(id, stocks){
         
-       const response =  await fetch(`${url}/trade/${player.id}/sell`, {
-          method: "PUT",
-
-          headers: {
-            "Content-Type": "application/json",
-
-          },
+       const response =  await apiFetch(`/trade/${player.id}/sell`, {
+          method: "PUT",          
 
           body: JSON.stringify({
             numOfStocks: stocks,
@@ -194,12 +185,8 @@ function Home(props){
           
         );
 
-          let savedPlayer = await fetch(`${url}/${player.id}/addTransaction`, {
+          let savedPlayer = await apiFetch(`/${player.id}/addTransaction`, {
             method: "PATCH", 
-
-            headers: {
-              "Content-Type": "application/json"
-            },
 
             body: JSON.stringify({
                 trade: "SOLD",
@@ -239,9 +226,9 @@ function Home(props){
       <div className="navigation" >
         <p className="clock sec-color" >Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
         <div className="portfolio-history">
-          <button onClick={() => transactions()} className="history-button navi-btn sec-color">Transaction History</button>
-          <button onClick={() => setPortfolio(true)} className='navi-btn sec-color'>Portfolio</button>
-          <button onClick={() => navigate("/")} className='navi-btn sec-color'>Log out</button>
+          <button onClick={() => transactions()} className="history-button navi-btn sec-color" type="button">Transaction History</button>
+          <button onClick={() => setPortfolio(true)} className='navi-btn sec-color' type="button">Portfolio</button>
+          <button onClick={() => navigate("/")} className='navi-btn sec-color' type="button">Log out</button>
         </div>
         
       </div>
