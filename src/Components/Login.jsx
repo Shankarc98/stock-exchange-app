@@ -1,11 +1,15 @@
 import {React, useState} from "react"; 
 import { useNavigate } from "react-router-dom";
+import apiFetch from "../utils/helper";
+import Popup from "./Popup";
 
 function Login(){   
     
     const navigate = useNavigate(); 
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
+    const [popup, setPopup] = useState(false);
+    const [popMessage, setPopMessage] = useState("");
 
     const url = import.meta.env.VITE_API_URL;
 
@@ -19,41 +23,37 @@ function Login(){
     async function loggedIn(event){
         event.preventDefault(); 
 
-        try{
-
-            const response = await fetch(`${url}/auth/login`, {
+        try {
+            const response = await apiFetch("/auth/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body : JSON.stringify({
+                body: JSON.stringify({
                     name: username,
                     password: password
                 })
             });
-
+        
             const body = await response.json();
-            const player = await body.player;
-            const token = await body.token;
-            
-            localStorage.setItem("token", token); 
-
-            if(!response.ok){
+        
+            if (!response.ok) {
                 alert("Invalid username or password");
                 return;
-            }            
-            else{ 
-                
-                navigate("/home", {
-                    state: {
-                        player
-                    }
-                })
             }
-            
+        
+            const player = body.player;
+            const token = body.token;
+        
+            localStorage.setItem("token", token);
+        
+            navigate("/home", {
+                state: {
+                    player
+                }
+            });
         }
-        catch(error){
-            console.log(error); 
+        catch (error) {
+            console.log(error);
+            setPopup(true);
+            setPopMessage("Server is down. Please Try again later");
         }
         
     }
@@ -85,6 +85,12 @@ function Login(){
                 
             </form>
         </div>
+
+        <Popup 
+            popup = {popup}
+            message = {popMessage}
+            setPopup = {setPopup}
+        />
     </div>
 }
 

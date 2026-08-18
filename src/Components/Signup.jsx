@@ -1,10 +1,13 @@
 import {React, useState} from "react"; 
 import {useNavigate} from "react-router-dom"; 
 import apiFetch from "../utils/helper";
+import Popup from "./Popup";
 
 function Signup(){
 
     const navigate = useNavigate(); 
+    const [popup, setPopup] = useState(false);
+    const [popMessage, setPopMessage] = useState("");
     let [usernameInp, setUnameInp] = useState(""); 
     let [pwdInp, setPwdInp] = useState("");
     let [confirmPwd, setConfirmPwd] = useState(""); 
@@ -34,12 +37,17 @@ function Signup(){
     
             if(!check.ok){
                 throw new Error("request failed");
+
             }
-            else 
-                navigate("/");
+            else{
+                
+                navigate("/");                
+            }
                                 
         }
         catch(error){
+            setPopup(true);
+            setPopMessage("Server is down. Please try again later");
             console.log(error);
         }
                                                                           
@@ -68,12 +76,12 @@ function Signup(){
                 <form className="signup-form form" onSubmit={handleSignup}>
                     <div className="username-container credential-container">
                         <p className="credential-title">Username</p>
-                        <input className="username-input credential-input" onChange={handleUsername} value={usernameInp} type="text" size="15"/>
+                        <input className="username-input credential-input" onChange={handleUsername} value={usernameInp} type="text" size="15" required/>
                     </div>
                     
                     <div className="password-container credential-container">
                         <p className="credential-title">Password</p>
-                        <input className="password-input credential-input" onChange={handlePassword} type="password" size="15"/>
+                        <input className="password-input credential-input" onChange={handlePassword} type="password" size="15" required/>
                     </div>
                     
                     <div className="confirm-password-container credential-container">
@@ -89,6 +97,12 @@ function Signup(){
             </div>
 
             <button className="back-to-login further-button" onClick={() => navigate("/")} type="button">Back to Login</button>
+
+            <Popup 
+                popup = {popup}
+                message = {popMessage}
+                setPopup = {setPopup}
+            />
         </div>        
 }
 
