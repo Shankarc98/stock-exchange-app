@@ -225,7 +225,7 @@ function Home(props){
       <div className="navigation" >
         <p className="clock" >Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
         <div className="portfolio-history">
-          <button onClick={() => transactions()} className="history-button navi-btn  " type="button">Transaction History</button>
+          <button onClick={() => transactions()} className="history-button navi-btn " type="button">Transaction History</button>
           <button onClick={() => setPortfolio(true)} className='navi-btn' type="button">Portfolio</button>
           <button onClick={() => navigate("/")} className='navi-btn ' type="button">Log out</button>
         </div>

@@ -1,8 +1,6 @@
-import { useEffect } from "react"
 
 export default function Header(props){
     
-    useEffect(() => {console.log("props.money in header", props.money)}, [props.money])
     return <div className="header">
         <div className="logo-brand">
           <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>          

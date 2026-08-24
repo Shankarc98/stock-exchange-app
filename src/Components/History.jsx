@@ -1,14 +1,14 @@
 import {React, useState, useEffect} from "react";
 import Transaction from "./Transaction";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import apiFetch from "../utils/helper";
 import Header from "./Header";
 
 function History(){
-    
+    const navigate = useNavigate();
     const {state} = useLocation(); 
     const [history, setHistory] = useState([]);
-
+    const player = state.player;
 
     useEffect(() => {
         
@@ -38,19 +38,19 @@ function History(){
     return <div className="history-cont">
         
         <Header money = {state.player.money}/>
+
+        <div className="transaction-page-navigation">
+            <button className = "navi-btn"onClick={() => navigate("/home", {
+                state : {player}
+            })} type="button">Home</button>
+            <button className = "navi-btn" onClick = {() => navigate("/")} type="button">Logout</button>
+        </div>
         <div className="history-header">
-            <h1>Transaction History</h1>
+            <h3>Transaction History</h3>
         </div>
         
-        <div className="table-cont">
-        <div className="history-top-row hist-row">
-            <p className="transactionType">Trade</p>
-            <p className="transactionName">Company</p>
-            <p className="transactionShares">Shares Traded</p>
-            <p className="transactionPrice">Share Price at Transaction</p>
-            <p className="transactionMoney">Total money</p>            
-        </div>
-
+    <div className="table-cont">
+            
        { history.map(h => {
           return <Transaction 
                 key = {h.id}
@@ -63,6 +63,7 @@ function History(){
                 deleteHistory={deleteHistory}
                 />
         })}
+
         </div>
         
     </div>

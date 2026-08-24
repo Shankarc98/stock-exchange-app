@@ -106,7 +106,15 @@
   flex-direction: column;
   align-items: center;  
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   
-
+  position: relative;
+}
+.transaction-page-navigation{
+  position: absolute;
+  right: 1rem;
+  top: 100px;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 .history-header{
   width: 100%;
@@ -116,19 +124,35 @@
   
 }
 .table-cont{
-  width: 90%;
-}
-.hist-row{
+  width: 600px;
+  margin-top: 2rem;
   display: flex;
-  justify-content: space-evenly;
-  gap: 2rem;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.history-record{
+  display: flex;
+  width: fit-content;
+  border-radius: 20px;
+}
+.transaction-part-one{
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+.transaction-part-one-a{
+  display: flex;
+  gap: 10px;
+  color: gray;
 }
 .transactionType{
   width: 65px;
 }
 .transactionName{
-  width: 100px;
+  width: fit-content;
+  margin-bottom: 0;
+  font-weight: bold;
 }
 .transactionShares{
   width: 80px;
@@ -138,9 +162,21 @@
 }
 .transactionMoney{
   width: 100px;
+  font-weight: bold;
+}
+.transaction-part-two{
+  margin-left: 200px;
 }
 .del-transaction{
   width: 25px;
+  height: fit-content;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 5px;
+  border: none;
+  font-weight: bolder;
+  font-size: larger;
+  background-color: aliceblue;
 }
 
 .portfolio{
@@ -509,14 +545,52 @@
   .navigation{
     flex-direction: column;
   }
-    
-  .transactionMoney{
-    display: none;
+  
+  .history-cont{
+    width: 95%;
   }
-  .transactionPrice{
-    display: none;
+  .transaction-page-navigation{
+    position: static;
+    
+  }
+  
+  .table-cont{
+    width: 100%;
+    align-items: center;
+  }
+  .history-record{
+    width: 260px;
+    position: relative;
+    flex-direction: column;
+  }
+  .transaction-part-one-a{
+    font-size: smaller;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .transactionName{
+    font-size: small;
+  }
+  .transactionType{
+    width: fit-content;
+  }
+  .transaction-part-two{
+    margin-left: 0;
+  }
+  .transactionMoney{
+    font-size: small;
+    margin-left: 1rem;
+    margin-top: 5px;
   }
 
+  .del-transaction{
+    font-size: large;
+    position: absolute;
+    top: 0;
+    right: 2px;
+    display: flex !important;
+    background-color: white;
+  }
   .brand-header{
     margin-left: 0;
     justify-content: center;
@@ -527,6 +601,7 @@
     font-size: 1rem;
   }
   .brand{
-    font-size: 2rem;
+    font-size: 1.5rem;
+    text-align:left;
   }
 }
