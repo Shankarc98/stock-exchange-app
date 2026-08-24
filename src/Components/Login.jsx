@@ -70,12 +70,12 @@ function Login(){
             <form className="form" onSubmit={loggedIn}>
                 <div className="username-container credential-container">
                     <p className="credential-title">Username</p>
-                    <input className="username-input credential-input" onChange={handleUsername} value={username} type="text" size="15"/>
+                    <input className="username-input credential-input" onChange={handleUsername} value={username} placeholder = "Enter username"type="text" size="15"/>
                 </div>
                 
                 <div className="password-container credential-container">
                     <p className="credential-title">Password</p>
-                    <input className="password-input credential-input" onChange={handlePassword} value={password} type="password" size="15"/>
+                    <input className="password-input credential-input" onChange={handlePassword} value={password} type="password" size="15" placeholder="Enter password"/>
                 </div>                
 
                 <div className="access-buttons">

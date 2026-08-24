@@ -76,17 +76,17 @@ function Signup(){
                 <form className="signup-form form" onSubmit={handleSignup}>
                     <div className="username-container credential-container">
                         <p className="credential-title">Username</p>
-                        <input className="username-input credential-input" onChange={handleUsername} value={usernameInp} type="text" size="15" required/>
+                        <input className="username-input credential-input" onChange={handleUsername} value={usernameInp} type="text" size="15" placeholder="Enter username" required/>
                     </div>
                     
                     <div className="password-container credential-container">
                         <p className="credential-title">Password</p>
-                        <input className="password-input credential-input" onChange={handlePassword} type="password" size="15" required/>
+                        <input className="password-input credential-input" onChange={handlePassword} type="password" size="15" placeholder="Enter password" required/>
                     </div>
                     
                     <div className="confirm-password-container credential-container">
                         <p className="credential-title">Confirm Password</p>
-                        <input className="confirm-password-input credential-input" onChange={handleConfirmPassword} type="password" size="15"/>
+                        <input className="confirm-password-input credential-input" onChange={handleConfirmPassword} type="password" size="15" placeholder="Enter password again" required/>
                     </div>
     
                     <div className="access-buttons">
@@ -96,7 +96,7 @@ function Signup(){
                 </form>
             </div>
 
-            <button className="back-to-login further-button" onClick={() => navigate("/")} type="button">Back to Login</button>
+            <button className="back-to-login" onClick={() => navigate("/")} type="button">Back to Login</button>
 
             <Popup 
                 popup = {popup}

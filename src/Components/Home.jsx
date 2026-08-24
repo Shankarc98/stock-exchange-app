@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import Card from "./Card"
-import companies from '../assets/Data.jsx';
 import Buy from './Buy';
 import Portfolio from "./Portfolio"
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiFetch from '../utils/helper.jsx';
 
 function Home(props){
-  
-  
+    
   const navigate = useNavigate(); 
   const {state} = useLocation(); 
 
@@ -207,6 +205,7 @@ function Home(props){
     }
 
   function transactions(){
+    
     navigate("/history", {
       state: {player}
     })
@@ -214,21 +213,21 @@ function Home(props){
 
   //App component
   return <div className="container">
-      <div className="header main-color">
+      <div className="header">
         <div className="logo-brand">
-          <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>
+          <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>          
           <h1 className="brand">Stock Market Simulation</h1>           
         </div>
         
-        <h2 className="wallet">Your Wallet = {Number(player.money.toFixed(2))}</h2>
+        <h2 className="wallet">Your Wallet = ₹ {Number(player.money.toFixed(2))}</h2>
 
       </div>
       <div className="navigation" >
-        <p className="clock sec-color" >Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
+        <p className="clock" >Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
         <div className="portfolio-history">
-          <button onClick={() => transactions()} className="history-button navi-btn sec-color" type="button">Transaction History</button>
-          <button onClick={() => setPortfolio(true)} className='navi-btn sec-color' type="button">Portfolio</button>
-          <button onClick={() => navigate("/")} className='navi-btn sec-color' type="button">Log out</button>
+          <button onClick={() => transactions()} className="history-button navi-btn  " type="button">Transaction History</button>
+          <button onClick={() => setPortfolio(true)} className='navi-btn' type="button">Portfolio</button>
+          <button onClick={() => navigate("/")} className='navi-btn ' type="button">Log out</button>
         </div>
         
       </div>
@@ -242,6 +241,7 @@ function Home(props){
         selectedCompany={selectedCompany}       
         close={() => {setBuyState(false); setSellState(false)}} 
         trade={trade} 
+        setTrade = {setTrade}
         style={buyState ? "flex" : "none"}
         stocksHeld = {player.stocksHeld.find(company => {
           if(company.companyName === selectedCompany?.name){

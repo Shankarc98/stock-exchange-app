@@ -4,7 +4,7 @@ function Transaction(props){
     
     const [focus, setFocus] = useState(false); 
 
-    return <div key={props.id} className="history-record hist-row" onMouseEnter={() => {setFocus(true)}} onMouseLeave={() => setFocus(false)}>
+    return <div style = {{backgroundColor : focus ? "aliceblue" : "white"}} key={props.id} className="history-record hist-row" onMouseEnter={() => {setFocus(true)}} onMouseLeave={() => setFocus(false)}>
          <p className="transactionType transactionRec">{props.type}</p>
          <p className="transactionName transactionRec">{props.compName}</p>
          <p className="transactionShares transactionRec">{props.sharesTraded}</p>

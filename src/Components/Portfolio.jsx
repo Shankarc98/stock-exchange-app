@@ -1,10 +1,8 @@
-import React, {useState} from "react"; 
+import {useState} from "react"; 
 
 
 function Portfolio(props){
     
-    const [records, setRecords] = useState(props.sharesHeld); 
-
     
     return <div style = {{display: props.style}} className="portfolio">
         

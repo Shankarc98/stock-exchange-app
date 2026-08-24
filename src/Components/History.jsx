@@ -2,13 +2,16 @@ import {React, useState, useEffect} from "react";
 import Transaction from "./Transaction";
 import { useLocation } from "react-router-dom";
 import apiFetch from "../utils/helper";
+import Header from "./Header";
 
-function History(props){
+function History(){
     
     const {state} = useLocation(); 
     const [history, setHistory] = useState([]);
 
+
     useEffect(() => {
+        
         const fetchPlayer = async () => {
             let response = await apiFetch(`/player/${state.player.name}/name`)
 
@@ -33,7 +36,9 @@ function History(props){
         
     }
     return <div className="history-cont">
-        <div className="history-header main-color">
+        
+        <Header money = {state.player.money}/>
+        <div className="history-header">
             <h1>Transaction History</h1>
         </div>
         

@@ -14,8 +14,20 @@ function Buy(props){
         setCount(val);
     }
 
+    useEffect(() => {
+
+        function handleMousedown(){
+            if(props.trade > 0) props.setTrade(0);
+            
+        }
+
+        document.addEventListener("mousedown", handleMousedown);
+
+        return () => document.removeEventListener("mousedown", handleMousedown);
+    }, [])
+
     return <div>
-        <div className="buy-cont trade-cont sec-color" style={{display : props.trade == 1 ? "flex" : "none" }}>
+        <div className="buy-cont trade-cont" style={{display : props.trade == 1 ? "flex" : "none" }}>
         
         <div className="head">
             <p className="title">Buy Shares</p>
@@ -28,10 +40,10 @@ function Buy(props){
             
         <input type="number" onChange={(event) => handleChange(event)} className="numShares" size="3" value={count}></input>
             
-        <button onClick={() => {props.handle(1, props.compId, count); setCount(0)}} className="trade-btn main-color" type="submit">Buy</button>
+        <button onClick={() => {props.handle(1, props.compId, count); setCount(0)}} className="trade-btn" type="submit">Buy</button>
     </div>
 
-    <div className="sell-cont trade-cont sec-color" style={{display : props.trade == 2 ? "flex" : "none"}}>
+    <div className="sell-cont trade-cont" style={{display : props.trade == 2 ? "flex" : "none"}}>
         <div className="head">
             <p className="title">Sell Shares</p>
             <button onClick={props.close} className="close" type="button">x</button>
