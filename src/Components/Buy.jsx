@@ -31,7 +31,7 @@ function Buy(props){
         
         <div className="head">
             <p className="title">Buy Shares</p>
-            <button onClick={props.close} className="close">✖</button>
+            <button onClick={props.close} className="close" type="button">✖</button>
         </div>
         
         <p className="tradeName">{props.selectedCompany.name}</p>

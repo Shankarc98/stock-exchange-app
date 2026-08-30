@@ -21,7 +21,7 @@ function Transaction(props){
              <p className = "transaction-time"></p>
          </div>
          
-         <button className="del-transaction" onClick={() => props.deleteHistory(props.id)} style={{display : focus ? "block" : "none"}} type="button">x</button>
+         <button className="del-transaction" onClick={() => props.deleteHistory(props.id)}  type="button">x</button>
     </div>
 }
 

@@ -61,8 +61,7 @@ function Login(){
     return <div className = "login-page credential-page">
             
             <div className="brand-header">
-                <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>
-                <h1 className="brand">Stock Market Simulation</h1>
+                <img className="stock-logo" src="/images/stocklogo.png" alt="stock market logo"/>
             </div>
 
         <div className="login-cont">

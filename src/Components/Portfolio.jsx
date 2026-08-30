@@ -1,5 +1,3 @@
-import {useState} from "react"; 
-
 
 function Portfolio(props){
     
@@ -7,9 +5,9 @@ function Portfolio(props){
     return <div style = {{display: props.style}} className="portfolio">
         
         <div className="portfolio-top">
-            <p className="portfolio-comp-name">Company</p> 
+            <p className="portfolio-comp-name">Company</p>             
             <p className="portfolio-shares">Shares</p>
-            <button onClick={props.closePort} className="port-close">x</button>           
+            <button onClick={props.closePort} className="port-close" type="button">x</button>           
         </div>
 
         {props.sharesHeld.map(s => {

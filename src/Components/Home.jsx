@@ -215,15 +215,14 @@ function Home(props){
   return <div className="container">
       <div className="header">
         <div className="logo-brand">
-          <img className="stock-logo" src="/images/stock.svg" alt="stock market logo"/>          
-          <h1 className="brand">Stock Market Simulation</h1>           
+          <img className="stock-logo" src="/images/stocklogo.png" alt="stock market logo"/>          
         </div>
         
-        <h2 className="wallet">Your Wallet = ₹ {Number(player.money.toFixed(2))}</h2>
+        <h2 className="wallet"><img src = "/images/wallet.svg" className = "wallet-logo" alt = "wallet logo"/>  ₹ {Number(player.money.toFixed(2))}</h2>
 
       </div>
       <div className="navigation" >
-        <p className="clock" >Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
+        <p className="clock">Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
         <div className="portfolio-history">
           <button onClick={() => transactions()} className="history-button navi-btn " type="button">Transaction History</button>
           <button onClick={() => setPortfolio(true)} className='navi-btn' type="button">Portfolio</button>
