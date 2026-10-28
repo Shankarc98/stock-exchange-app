@@ -3,6 +3,7 @@ import {React, useEffect, useState} from "react";
 function Buy(props){                    
 
     const [count, setCount] = useState(0);
+    
     function handleChange(event){
         
         let val = Number(event.target.value)
@@ -27,7 +28,7 @@ function Buy(props){
     }, [])
 
     return <div>
-        <div className="buy-cont trade-cont" style={{display : props.trade == 1 ? "flex" : "none" }}>
+        <div className="buy-cont trade-cont" style={{display : props.trade == 1 ? "flex" : "none"}}>
         
         <div className="head">
             <p className="title">Buy Shares</p>
