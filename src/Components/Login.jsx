@@ -1,4 +1,4 @@
-import {React, useState} from "react"; 
+import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import apiFetch from "../utils/helper";
 import Popup from "./Popup";
@@ -10,8 +10,6 @@ function Login(){
     const [password, setPassword] = useState(""); 
     const [popup, setPopup] = useState(false);
     const [popMessage, setPopMessage] = useState("");
-
-    const url = import.meta.env.VITE_API_URL;
 
     function handleUsername(event){
         setUsername(event.target.value); 
@@ -78,8 +76,8 @@ function Login(){
                 </div>                
 
                 <div className="access-buttons">
-                    <button className="signup-button further-button" onClick={() => {navigate("/signup")}}>Sign Up</button>
-                    <button className="login-button further-button" onClick={loggedIn}>Login</button>
+                    <button className="signup-button further-button" onClick={() => {navigate("/signup")}} type="button">Sign Up</button>
+                    <button className="login-button further-button" type="submit">Login</button>
                 </div>
                 
             </form>

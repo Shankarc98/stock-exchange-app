@@ -1,5 +1,3 @@
-import React from "react";
-
 function Card(props){
         
  return <div className="card-cont">
@@ -16,8 +14,8 @@ function Card(props){
             
 
         <div className="card-buttons">
-            <button onClick={() => props.handleClick(1, props.name, props.price, props.id)} className="btn" type="button">Buy</button>
-            <button onClick={() => props.handleClick(2, props.name, props.price, props.id)} className="btn" type="button">Sell</button>
+            <button onClick={() => props.handleClick(1, props.name)} className="btn" type="button">Buy</button>
+            <button onClick={() => props.handleClick(2, props.name)} className="btn" type="button">Sell</button>
         </div>
     </div>
 }

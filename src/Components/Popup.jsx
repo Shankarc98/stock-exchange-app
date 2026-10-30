@@ -1,8 +1,4 @@
-import {useState} from "react";
-
 export default function Popup(props){
-
-    const [popup, setPopup] = useState(props.popup);
 
     function handleClick(){
         props.setPopup(false);

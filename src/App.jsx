@@ -1,4 +1,3 @@
-import { React, useState, useEffect } from 'react'
 import Home from "./Components/Home";
 import History from "./Components/History.jsx";
 import Login from "./Components/Login";

@@ -10,8 +10,10 @@ function Portfolio(props){
             <button onClick={props.closePort} className="port-close" type="button">x</button>           
         </div>
 
+        {props.sharesHeld.length === 0 && <p className="portfolio-empty">No shares in your portfolio yet.</p>}
+
         {props.sharesHeld.map(s => {
-                return (<div key={crypto.randomUUID()} className="records">
+                return (<div key={s.companyName} className="records">
                     <p className="port-comp-name">{s.companyName}</p>
                     <p>{s.numOfStocks}</p>
                 </div>);

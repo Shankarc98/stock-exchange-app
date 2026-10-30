@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import Transaction from "./Transaction";
 import { useNavigate, useLocation } from "react-router-dom";
 import apiFetch from "../utils/helper";
@@ -20,7 +20,7 @@ function History(){
             setHistory(data.transactions); 
         }
         fetchPlayer(); 
-    }, [])
+    }, [state.player.name])
     async function deleteHistory(id){
         let response = await apiFetch(`/${state.player.id}/deleteTransaction/${id}`, {
             method: "PATCH",                       
@@ -50,6 +50,7 @@ function History(){
         </div>
         
     <div className="table-cont">
+       {history.length === 0 && <p className="empty-state">No transactions yet.</p>}
             
        { history.map(h => {
           return <Transaction 

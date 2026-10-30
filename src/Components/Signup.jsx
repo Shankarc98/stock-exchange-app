@@ -1,4 +1,4 @@
-import {React, useState} from "react"; 
+import {useState} from "react";
 import {useNavigate} from "react-router-dom"; 
 import apiFetch from "../utils/helper";
 import Popup from "./Popup";

@@ -5,7 +5,7 @@ import Portfolio from "./Portfolio"
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiFetch from '../utils/helper.jsx';
 
-function Home(props){
+function Home(){
     
   const navigate = useNavigate(); 
   const {state} = useLocation(); 
@@ -26,7 +26,7 @@ function Home(props){
           
     fetchPlayer();
 
-  }, []);
+  }, [player.name]);
 
   //main array - all companies
   const [companies, updateCompanies] = useState([]); 
@@ -70,33 +70,20 @@ function Home(props){
       }, [])
     
 
-  let [buyState, setBuyState] = useState(false);
-  let [sellState, setSellState] = useState(false);
   const [portfolio, setPortfolio] = useState(false);
-
-  let [trade, setTrade] = useState(0);  
-
-  useEffect(() => {
-    if(buyState)  setTrade(1);
-    else if(sellState)  setTrade(2);
-    else setTrade(0);
-  }, [buyState, sellState])
+  const [trade, setTrade] = useState(0);
   
     
   let [selectedCompany, setCompany] = useState({});
 
   
   //buy and sell button in card clicked
-  async function handleClick(a, name, cp){
-    
-    a == 1 ? setBuyState(true) : setSellState(true)    
-    
-    companies.map((c) => {
-      if(c.name === name){ 
-        setCompany(c);
-      }
-    })
-    
+  function handleClick(action, name){
+    const company = companies.find(item => item.name === name);
+    if (!company) return;
+
+    setTrade(action);
+    setCompany(company);
   }
            
      //trading 
@@ -238,10 +225,8 @@ function Home(props){
 
       <Buy 
         selectedCompany={selectedCompany}       
-        close={() => {setBuyState(false); setSellState(false)}} 
+        close={() => setTrade(0)}
         trade={trade} 
-        setTrade = {setTrade}
-        style={buyState ? "flex" : "none"}
         stocksHeld = {player.stocksHeld.find(company => {
           if(company.companyName === selectedCompany?.name){
             return company;
