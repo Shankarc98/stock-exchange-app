@@ -1,16 +1,33 @@
 import {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import apiFetch from "../utils/helper";
 import {getApiErrorMessage, getRequestFailureMessage} from "../utils/apiErrors";
 import Popup from "./Popup";
+import {
+    AUTH_TOKEN_KEY,
+    clearSessionTimeoutNotice,
+    isSessionControlError,
+    SESSION_TIMEOUT_MESSAGE,
+    SESSION_TIMEOUT_SHOWN_KEY
+} from "../utils/session";
 
 function Login(){   
     
     const navigate = useNavigate(); 
+    const location = useLocation();
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
     const [popup, setPopup] = useState(false);
     const [popMessage, setPopMessage] = useState("");
+    const sessionTimedOut = location.state?.sessionTimedOut === true
+        && sessionStorage.getItem(SESSION_TIMEOUT_SHOWN_KEY) !== "true";
+
+    useEffect(() => {
+        if (sessionTimedOut) {
+            sessionStorage.setItem(SESSION_TIMEOUT_SHOWN_KEY, "true");
+        }
+    }, [sessionTimedOut]);
 
     function handleUsername(event){
         setUsername(event.target.value); 
@@ -41,7 +58,8 @@ function Login(){
             const player = body.player;
             const token = body.token;
         
-            localStorage.setItem("token", token);
+            clearSessionTimeoutNotice();
+            localStorage.setItem(AUTH_TOKEN_KEY, token);
         
             navigate("/home", {
                 state: {
@@ -50,6 +68,7 @@ function Login(){
             });
         }
         catch (error) {
+            if (isSessionControlError(error)) return;
             setPopup(true);
             setPopMessage(getRequestFailureMessage(error));
         }
@@ -84,8 +103,8 @@ function Login(){
         </div>
 
         <Popup 
-            popup = {popup}
-            message = {popMessage}
+            popup = {popup || sessionTimedOut}
+            message = {sessionTimedOut ? SESSION_TIMEOUT_MESSAGE : popMessage}
             setPopup = {setPopup}
         />
     </div>

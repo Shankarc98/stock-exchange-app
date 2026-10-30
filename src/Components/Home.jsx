@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import apiFetch from '../utils/helper.jsx';
 import {getApiErrorMessage, getRequestFailureMessage} from "../utils/apiErrors";
 import {calculateNetWorth, calculateTradeAmount, formatCurrency} from "../utils/currency";
+import {clearAuthToken, isSessionControlError} from "../utils/session";
 
 function Home(){
     
@@ -22,12 +23,16 @@ function Home(){
 
   useEffect(() => {
     const fetchPlayer  = async () => {
-      const response = await apiFetch(`/player/${player.name}/name`,{
-        method: "GET",        
-      })
-      
-      const playerResponse = await response.json();
-      setPlayer(playerResponse);
+      try {
+        const response = await apiFetch(`/player/${player.name}/name`,{
+          method: "GET",
+        })
+
+        const playerResponse = await response.json();
+        setPlayer(playerResponse);
+      } catch (error) {
+        if (!isSessionControlError(error)) throw error;
+      }
     }
           
     fetchPlayer();
@@ -39,12 +44,16 @@ function Home(){
 
   useEffect(() => {
    const fetchCompanies = async () => {
-    const response = await apiFetch(`/company`, {
-      method: "GET"
-    })
-    const data = await response.json();
-    updateCompanies(data.companies);
-    setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+    try {
+      const response = await apiFetch(`/company`, {
+        method: "GET"
+      })
+      const data = await response.json();
+      updateCompanies(data.companies);
+      setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+    } catch (error) {
+      if (!isSessionControlError(error)) throw error;
+    }
    }
     fetchCompanies();
   }, []);
@@ -52,13 +61,17 @@ function Home(){
 
   useEffect(() => {
     const fetchPrices = async () => {
-      const response = await apiFetch(`/company`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      updateCompanies(data.companies);
-      setCompany(current => data.companies.find(company => company.id === current?.id) ?? current);
-      setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+      try {
+        const response = await apiFetch(`/company`, {
+          method: "GET",
+        });
+        const data = await response.json();
+        updateCompanies(data.companies);
+        setCompany(current => data.companies.find(company => company.id === current?.id) ?? current);
+        setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+      } catch (error) {
+        if (!isSessionControlError(error)) throw error;
+      }
     };
 
     const interval = setInterval(() => {
@@ -144,10 +157,16 @@ function Home(){
       ));
       return true;
     } catch (error) {
+      if (isSessionControlError(error)) return false;
       setPopMessage(getRequestFailureMessage(error));
       setPopup(true);
       return false;
     }
+  }
+
+  function logOut(){
+    clearAuthToken();
+    navigate("/");
   }
 
   function transactions(){
@@ -168,7 +187,7 @@ function Home(){
         <div className="portfolio-history">
           <button onClick={() => transactions()} className="history-button navi-btn " type="button">Transaction History</button>
           <button onClick={() => setPortfolio(true)} className='navi-btn' type="button">Portfolio</button>
-          <button onClick={() => navigate("/")} className='navi-btn ' type="button">Log out</button>
+          <button onClick={logOut} className='navi-btn ' type="button">Log out</button>
         </div>
         
       </div>

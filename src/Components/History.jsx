@@ -3,6 +3,7 @@ import Transaction from "./Transaction";
 import { useNavigate, useLocation } from "react-router-dom";
 import apiFetch from "../utils/helper";
 import Header from "./Header";
+import {clearAuthToken, isSessionControlError} from "../utils/session";
 
 function History(){
     const navigate = useNavigate();
@@ -13,27 +14,39 @@ function History(){
     useEffect(() => {
         
         const fetchPlayer = async () => {
-            let response = await apiFetch(`/player/${state.player.name}/name`)
+            try {
+                let response = await apiFetch(`/player/${state.player.name}/name`)
 
-            let data = await response.json(); 
+                let data = await response.json();
 
-            setHistory(data.transactions); 
+                setHistory(data.transactions);
+            } catch (error) {
+                if (!isSessionControlError(error)) throw error;
+            }
         }
         fetchPlayer(); 
     }, [state.player.name])
     async function deleteHistory(id){
-        let response = await apiFetch(`/${state.player.id}/deleteTransaction/${id}`, {
-            method: "PATCH",                       
-        });
+        try {
+            let response = await apiFetch(`/${state.player.id}/deleteTransaction/${id}`, {
+                method: "PATCH",
+            });
 
-        if(response.ok){
-            setHistory(prev => {
-                return prev.filter(p => {
-                    return p.id !== id;
+            if(response.ok){
+                setHistory(prev => {
+                    return prev.filter(p => {
+                        return p.id !== id;
+                    })
                 })
-            })
+            }
+        } catch (error) {
+            if (!isSessionControlError(error)) throw error;
         }
-        
+    }
+
+    function logOut(){
+        clearAuthToken();
+        navigate("/");
     }
     return <div className="history-cont">
         
@@ -43,7 +56,7 @@ function History(){
             <button className = "navi-btn"onClick={() => navigate("/home", {
                 state : {player}
             })} type="button">Home</button>
-            <button className = "navi-btn" onClick = {() => navigate("/")} type="button">Logout</button>
+            <button className = "navi-btn" onClick={logOut} type="button">Logout</button>
         </div>
         <div className="history-header">
             <h3>Transaction History</h3>
