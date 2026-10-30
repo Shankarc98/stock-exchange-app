@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom"; 
 import apiFetch from "../utils/helper";
+import {getApiErrorMessage, getRequestFailureMessage} from "../utils/apiErrors";
 import Popup from "./Popup";
 
 function Signup(){
@@ -17,11 +18,13 @@ function Signup(){
         event.preventDefault(); 
 
         if(usernameInp.length < 5){
-            alert("username should have atleast 5 characters"); 
+            setPopup(true);
+            setPopMessage("Username must contain at least 5 characters.");
             return
         }
         if(pwdInp !== confirmPwd){
-            alert("passwords dont match");
+            setPopup(true);
+            setPopMessage("Passwords do not match. Please try again.");
             return
         }
 
@@ -36,19 +39,17 @@ function Signup(){
             })
     
             if(!check.ok){
-                throw new Error("request failed");
+                setPopMessage(await getApiErrorMessage(check, "signup"));
+                setPopup(true);
+                return;
+            }
 
-            }
-            else{
-                
-                navigate("/");                
-            }
+            navigate("/");
                                 
         }
         catch(error){
             setPopup(true);
-            setPopMessage("Server is down. Please try again later");
-            console.log(error);
+            setPopMessage(getRequestFailureMessage(error));
         }
                                                                           
     }

@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import apiFetch from "../utils/helper";
+import {getApiErrorMessage, getRequestFailureMessage} from "../utils/apiErrors";
 import Popup from "./Popup";
 
 function Login(){   
@@ -30,13 +31,13 @@ function Login(){
                 })
             });
         
-            const body = await response.json();
-        
             if (!response.ok) {
-                alert("Invalid username or password");
+                setPopMessage(await getApiErrorMessage(response, "login"));
+                setPopup(true);
                 return;
             }
         
+            const body = await response.json();
             const player = body.player;
             const token = body.token;
         
@@ -49,9 +50,8 @@ function Login(){
             });
         }
         catch (error) {
-            console.log(error);
             setPopup(true);
-            setPopMessage("Server is down. Please Try again later");
+            setPopMessage(getRequestFailureMessage(error));
         }
         
     }

@@ -1475,3 +1475,198 @@ input:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+.financial-summary {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.net-worth,
+.wallet {
+  display: flex;
+  min-width: 150px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--brand);
+  font-size: 0.88rem;
+}
+
+.net-worth strong,
+.wallet strong {
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wallet {
+  display: grid;
+  min-width: 170px;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 9px;
+  align-items: center;
+}
+
+.wallet-logo {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.wallet-label,
+.wallet strong {
+  grid-column: 2;
+}
+
+.wallet-label {
+  color: var(--brand);
+  font-size: 0.88rem;
+}
+
+.trade-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.trade-preview strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.trade-warning,
+.trade-warning strong,
+.trade-warning span {
+  color: #a12d24;
+}
+
+.trade-warning span {
+  width: 100%;
+  font-weight: 600;
+}
+
+.numShares[aria-invalid="true"] {
+  border-color: #a12d24;
+}
+
+@media (max-width: 760px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .logo-brand {
+    flex: 1 1 280px;
+  }
+
+  .financial-summary {
+    flex: 1 1 300px;
+  }
+
+  .financial-summary {
+    gap: 8px;
+  }
+
+  .net-worth,
+  .wallet {
+    min-width: 0;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 540px) {
+  .financial-summary {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .net-worth,
+  .wallet {
+    width: 100%;
+  }
+
+  .net-worth strong,
+  .wallet strong {
+    font-size: clamp(0.9rem, 4vw, 1.05rem);
+  }
+
+  .company-cards-cont {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card-cont {
+    display: grid;
+    width: 100%;
+    min-height: 148px;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) 72px;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .name-price {
+    display: grid;
+    width: auto;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-comp {
+    min-width: 0;
+    grid-column: 1 / -1;
+    gap: 9px;
+  }
+
+  .comp-name {
+    min-width: 0;
+    font-size: 0.98rem;
+    overflow-wrap: anywhere;
+  }
+
+  .price {
+    min-width: 0;
+    margin: 0;
+    font-size: clamp(1.05rem, 5vw, 1.35rem);
+    white-space: nowrap;
+  }
+
+  .change {
+    align-self: center;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .card-buttons {
+    width: 72px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 38px;
+    flex: 0 0 auto;
+    padding: 6px;
+    border-radius: 8px;
+  }
+}

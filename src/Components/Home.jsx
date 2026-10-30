@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react'
 import Card from "./Card"
 import Buy from './Buy';
 import Portfolio from "./Portfolio"
+import Header from "./Header";
+import Popup from "./Popup";
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiFetch from '../utils/helper.jsx';
+import {getApiErrorMessage, getRequestFailureMessage} from "../utils/apiErrors";
+import {calculateNetWorth, calculateTradeAmount, formatCurrency} from "../utils/currency";
 
 function Home(){
     
@@ -12,6 +16,8 @@ function Home(){
 
   const [player, setPlayer] = useState(state.player);
   const [seconds, setSeconds] = useState(0); 
+  const [popup, setPopup] = useState(false);
+  const [popMessage, setPopMessage] = useState("");
 
 
   useEffect(() => {
@@ -44,37 +50,33 @@ function Home(){
   }, []);
   
 
-  async function fetchPrices(){
-    const response = await apiFetch(`/company`, {
-        method: "GET",            
-    })
-    const data = await response.json();
-    updateCompanies(data.companies);
-    return setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
-    
-  }
-       
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const response = await apiFetch(`/company`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      updateCompanies(data.companies);
+      setCompany(current => data.companies.find(company => company.id === current?.id) ?? current);
+      setSeconds(Math.floor((data.nextUpdateTime - Date.now()) / 1000));
+    };
 
-  useEffect(() => {        
-          const  fetchCompanies = setInterval(() => {
-              setSeconds(prev => {
-                  if(prev <= 0){                                           
-                    fetchPrices(); 
-                                                              
-                  }
-                  return prev - 1;
-              });
-          }, 1000);
-          
-          return () => clearInterval(fetchCompanies);
-      }, [])
+    const interval = setInterval(() => {
+      setSeconds(previous => {
+        if (previous <= 0) fetchPrices();
+        return previous - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
     
 
   const [portfolio, setPortfolio] = useState(false);
   const [trade, setTrade] = useState(0);
   
     
-  let [selectedCompany, setCompany] = useState({});
+  const [selectedCompany, setCompany] = useState(null);
 
   
   //buy and sell button in card clicked
@@ -87,109 +89,66 @@ function Home(){
   }
            
      //trading 
-     function handleTrade(trade, id, stocks){
-        if(trade == 1)
-          handleBuy(id, stocks);        
-        else
-          handleSell(id, stocks);
+  async function handleTrade(action, id, stocks){
+    const company = companies.find(item => item.id === id) ?? selectedCompany;
+    if (!company || !Number.isInteger(stocks) || stocks <= 0){
+      setPopMessage("Enter a whole number of shares greater than zero.");
+      setPopup(true);
+      return false;
+    }
+
+    const amount = calculateTradeAmount(company.price, stocks);
+    const heldShares = player.stocksHeld
+      .filter(holding => holding.companyName === company.name)
+      .reduce((total, holding) => total + holding.numOfStocks, 0);
+
+    if (action === 1 && amount > player.money){
+      setPopMessage(`Insufficient balance. You need ${formatCurrency(amount)}, but your available balance is ${formatCurrency(player.money)}.`);
+      setPopup(true);
+      return false;
+    }
+
+    if (action === 1 && stocks > company.stocks){
+      setPopMessage(`Only ${company.stocks} shares are currently available to buy.`);
+      setPopup(true);
+      return false;
+    }
+
+    if (action === 2 && stocks > heldShares){
+      setPopMessage(`You do not have enough shares to sell. Available quantity: ${heldShares}.`);
+      setPopup(true);
+      return false;
+    }
+
+    try {
+      const response = await apiFetch(`/trade/${player.id}/${action === 1 ? "buy" : "sell"}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          numOfStocks: stocks,
+          companyId: company.id
+        })
+      });
+
+      if (!response.ok){
+        setPopMessage(await getApiErrorMessage(response, "trade"));
+        setPopup(true);
+        return false;
       }
 
-      async function handleBuy(id, stocks){
-        const response =  await apiFetch(`/trade/${player.id}/buy`, {
-          method: "PUT",
-
-          body: JSON.stringify({
-            numOfStocks: stocks,
-            price: selectedCompany.price,
-            companyName: selectedCompany.name,
-            companyId: selectedCompany.id
-          })
-
-        });
-
-        
-        if(response.ok){
-          
-          const updatedPlayer = await response.json();
-
-          setPlayer(prev => {
-            return {...prev, money: updatedPlayer.p.money, stocksHeld: updatedPlayer.p.stocksHeld}
-          }); 
-          setCompany(updatedPlayer.c);
-          updateCompanies(prev => 
-          prev.map(p => 
-            p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
-          ));
-
-          let savedPlayer = await apiFetch(`/${player.id}/addTransaction`, {
-            method: "PATCH", 
-
-            body: JSON.stringify({
-                trade: "BOUGHT",
-                company: selectedCompany.name,
-                sharesTraded: stocks,
-                price: selectedCompany.price,
-                totalMoney: stocks * selectedCompany.price
-
-            })
-          })
-          savedPlayer = await savedPlayer.json(); 
-
-          if(savedPlayer.ok){
-            setPlayer(savedPlayer);
-          }
-        }
-          
-      } 
-
-    async function handleSell(id, stocks){
-        
-       const response =  await apiFetch(`/trade/${player.id}/sell`, {
-          method: "PUT",          
-
-          body: JSON.stringify({
-            numOfStocks: stocks,
-            price: selectedCompany.price,
-            companyName: selectedCompany.name,
-            companyId: selectedCompany.id
-          })
-
-        });
-
-        
-          const updatedPlayer = await response.json();
-        
-        
-        if(response.ok){
-          setPlayer(updatedPlayer.p); 
-          setCompany(updatedPlayer.c);
-          updateCompanies(prev => 
-          prev.map(p => 
-            p.id === id ? {...p, stocks: updatedPlayer.c.stocks} : p            
-          )  
-          
-        );
-
-          let savedPlayer = await apiFetch(`/${player.id}/addTransaction`, {
-            method: "PATCH", 
-
-            body: JSON.stringify({
-                trade: "SOLD",
-                company: selectedCompany.name,
-                sharesTraded: stocks,
-                price: selectedCompany.price,
-                totalMoney: stocks * selectedCompany.price
-            })
-          })
-
-          savedPlayer = await savedPlayer.json(); 
-
-          if(savedPlayer.ok){
-            setPlayer(savedPlayer);
-          }
-        }
-        
+      const updatedPlayer = await response.json();
+      const updatedCompany = updatedPlayer.c;
+      setPlayer(updatedPlayer.p);
+      setCompany(updatedCompany);
+      updateCompanies(previous => previous.map(item =>
+        item.id === id ? updatedCompany : item
+      ));
+      return true;
+    } catch (error) {
+      setPopMessage(getRequestFailureMessage(error));
+      setPopup(true);
+      return false;
     }
+  }
 
   function transactions(){
     
@@ -200,14 +159,10 @@ function Home(){
 
   //App component
   return <div className="container">
-      <div className="header">
-        <div className="logo-brand">
-          <img className="stock-logo" src="/images/stocklogo.png" alt="stock market logo"/>          
-        </div>
-        
-        <h2 className="wallet"><img src = "/images/wallet.svg" className = "wallet-logo" alt = "wallet logo"/>  ₹ {Number(player.money.toFixed(2))}</h2>
-
-      </div>
+      <Header
+        money={player.money}
+        netWorth={calculateNetWorth(player.money, player.stocksHeld, companies)}
+      />
       <div className="navigation" >
         <p className="clock">Next update in: {Math.floor(seconds / 60)}:{(seconds % 60) < 10 ? 0 : ""}{seconds % 60}</p> 
         <div className="portfolio-history">
@@ -223,10 +178,15 @@ function Home(){
           })}          
       </div>
 
-      <Buy 
+      <Buy
+        key={`${trade}-${selectedCompany?.id ?? ""}`}
         selectedCompany={selectedCompany}       
         close={() => setTrade(0)}
         trade={trade} 
+        walletBalance={player.money}
+        availableShares={player.stocksHeld
+          .filter(holding => holding.companyName === selectedCompany?.name)
+          .reduce((total, holding) => total + holding.numOfStocks, 0)}
         stocksHeld = {player.stocksHeld.find(company => {
           if(company.companyName === selectedCompany?.name){
             return company;
@@ -234,12 +194,15 @@ function Home(){
         }          
           
         )}
-        handle = {(tr, id, stocks) => {
-          handleTrade(tr, id, stocks);
+        handle={handleTrade}
+        onValidationError={message => {
+          setPopMessage(message);
+          setPopup(true);
         }}
         />
 
       <Portfolio sharesHeld={player.stocksHeld} closePort={() => {setPortfolio(false)}} style={portfolio ? "flex" : "none"}/>  
+      <Popup popup={popup} message={popMessage} setPopup={setPopup}/>
 
   </div>
 }
